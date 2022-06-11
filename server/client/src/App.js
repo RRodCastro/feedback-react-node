@@ -28,6 +28,7 @@ function App() {
     onClick={() => setNames(names.filter((_, i) => i !== index))  }
     style={{margin: "20px"}} key={currentName + index}> {currentName} </span> )}
     </div>
+    <a href="/auth/google"> Auth</a>
     </div>
   );
 }
