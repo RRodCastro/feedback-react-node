@@ -21,21 +21,17 @@ passport.use(
       callbackURL: "/auth/google/callback",
       scope: ["profile", "email"],
     },
-    (token, refreshToken, profile, done) => {
-      User.findOne({ googleId: profile.id }).then((newUser) => {
-        if (newUser) {
-          // user already in db
-          // done callback passport
-          done(null, newUser);
-          //done(null, {googleId: newUser.googleId});
-        } else {
-          new User({ googleId: profile.id }).save().then(
-            passport.serializeUser((user, done) => {
-              done(null, user);
-            })
-          );
-        }
-      });
+    async (token, refreshToken, profile, done) => {
+      const newUser = await User.findOne({ googleId: profile.id });
+
+      if (newUser) {
+        // user already in db
+        // done callback passport
+        return done(null, newUser);
+        //done(null, {googleId: newUser.googleId});
+      }
+      const user = await new User({ googleId: profile.id }).save();
+      done(null, user);
     }
   )
 );

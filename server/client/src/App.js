@@ -1,36 +1,31 @@
-import './App.css';
-import React, { useState } from 'react';
+import React, { Component, Fragment } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { connect } from "react-redux";
 
-function App() {
-  const [name, setName] = useState("");
-  const [names, setNames] = useState([]);
+const mapStateToProps = (state) => {
+  return state.count
+};
 
-  return (
-    <div>
-      <input
-      value={name}
-      onChange={(event) => setName(event.target.value)}
-      >
-      </input>
-      {name.split("").map((letter, index) => <span onClick={() => setName(name.split("").filter((_, i) => i !== index).join(""))  } key={letter + index}> {letter}</span>)}
-    <button
-      onClick={() => {
-        setNames(names.concat(name)); setName("");
-      }}
-      style={{marginLeft: "10px", border: "1px solid black"}}
-    >
-      Save
-    </button>
-    <div style={{display: "flex"}}>
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onCountIncrease: () => dispatch({ type: "INCREMENT" }),
+    onCountDecrease: () => dispatch({ type: "DECREMENT" }),
+  };
+};
 
-
-    {names.map((currentName, index) => <span
-    onClick={() => setNames(names.filter((_, i) => i !== index))  }
-    style={{margin: "20px"}} key={currentName + index}> {currentName} </span> )}
-    </div>
-    <a href="/auth/google"> Auth</a>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <Fragment>
+        <Routes >
+          <Route path="/" element={<div> <a href="/home"> Home </a> <button onClick={() => this.props.onCountIncrease()}>+ </button > <span> {this.props.count} </span> <button  onClick={() => this.props.onCountDecrease()}>-</button></div>} />
+          <Route path="/home" element={<div> hello world home &nbsp; { this.props.count }</div>} />
+          <Route path="/checkout" element={<div> hello world checkout &nbsp; { this.props.count }</div>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Fragment>
+    );
+  }
 }
 
-export default App;
+export default  connect(mapStateToProps, mapDispatchToProps)(App);
