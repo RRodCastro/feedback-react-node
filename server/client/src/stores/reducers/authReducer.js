@@ -1,25 +1,28 @@
 import * as actionTypes from "../actions/actionsTypes";
 
 const initialState = {
-  count: localStorage.getItem("count") && !isNaN(localStorage.getItem("count")) ? parseInt(localStorage.getItem("count"))  : 1,
+  count: 0,
+  userId: '',
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.INCREMENT:
-      localStorage.setItem("count", state.count + 1);
       return {
         ...state,
         count: state.count + 1,
       };
-
     case actionTypes.DECREMENT:
-      localStorage.setItem("count", state.count - 1);
-
       return {
         ...state,
         count: state.count - 1,
       };
+
+      case actionTypes.GET_USER:
+        return {
+          ...state,
+          userId: action.data.user,
+        };
 
     default:
       return state;
