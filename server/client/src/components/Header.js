@@ -1,25 +1,42 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
+const mapStateToProps = ({ auth }) => {
+  return { auth };
 };
 
 class Header extends Component {
+  renderContent() {
+    switch (this.props.auth.userId) {
+      case null:
+        return null;
+      case false:
+        return (
+          <li>
+            <a href="/auth/google">Login with Google</a>
+          </li>
+        );
+      default:
+        return (
+          <li>
+            <a href="/api/logout">Log out</a>
+          </li>
+        );
+    }
+  }
+
   render() {
     return (
       <nav>
         <div className="nav-wrapper">
-          <a href="/" className="brand-logo">
+          <Link to={this.props.auth.userId ? "/surveys" : "/"} className="brand-logo">
             Emaily
-          </a>
+          </Link>
           <ul id="nav-mobile" className="right">
-            <li>
-              <a href="sass.html">
-                {this.props.auth.userId ? "Log out" : "Login with Google"}
-              </a>
-            </li>
+          {this.renderContent()}
           </ul>
+         
         </div>
       </nav>
     );

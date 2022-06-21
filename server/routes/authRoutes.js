@@ -8,10 +8,12 @@ module.exports = (app) => {
   app.get("/auth/google", googleAuth);
   // Handled Authorized redirect URIs from Google and authenticate again
   // then callback from GoogleStrategy will be executed
-  app.get("/auth/google/callback", googleAuth);
+  app.get("/auth/google/callback", googleAuth, (req, res) => {
+    res.redirect("/surveys");
+  });
   app.get("/api/current_user", (req, res) => res.send(req.user));
   app.get("/api/logout", (req, res) => {
     req.logout();
-    res.send();
+    res.redirect("/");
   });
 };

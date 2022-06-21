@@ -1,4 +1,5 @@
 import * as actionTypes from "./actionsTypes";
+import axios from 'axios';
 
 export const increment = () => {
   return {
@@ -20,10 +21,11 @@ export const getUserID = (userID) => {
 };
 export const getUser = () => {
   return async (dispatch) => {
-    const response = await fetch("/api/current_user");
-    const user = await response.json();
-    if (user && user.googleId) {
-      dispatch(getUserID(user.googleId));
+    const response = await axios.get("/api/current_user");
+    if (response.data && response.data.googleId) {
+      return dispatch(getUserID(response.data.googleId));
     }
+    dispatch(getUserID(false));
+
   };
 };

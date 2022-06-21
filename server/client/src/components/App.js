@@ -1,46 +1,35 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Header from "./Header";
-import { getUser } from "../stores/actions";
+import * as actions from "../stores/actions/index";
+import Lading from "./Landing";
 
 const mapStateToProps = (state) => {
-  return {auth: state.auth}
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onCountIncrease: () => dispatch({ type: "INCREMENT" }),
-    onCountDecrease: () => dispatch({ type: "DECREMENT" }),
-    getUser: () => dispatch(getUser())
-  };
+  return { auth: state.auth };
 };
 
 class App extends Component {
   componentDidMount() {
-    this.props.getUser()
+    this.props.getUser();
   }
   render() {
+    console.log(this.props);
     return (
-      <div className="container" >
+      <div className="container">
         <Header />
         <Routes>
           <Route
             path="/"
             element={
               <div>
-                {" "}
+                <Lading />
                 <a href="/home"> Home </a>{" "}
-                <button onClick={() => this.props.onCountIncrease()}>+ </button>{" "}
+                <button onClick={() => this.props.increment()}>+ </button>{" "}
                 <span> {this.props.auth.count} </span>{" "}
-                <button onClick={() => this.props.onCountDecrease()}>-</button>
+                <button onClick={() => this.props.decrement()}>-</button>
               </div>
             }
-          />
-          <Route path="/home" element={<Header />} />
-          <Route
-            path="/checkout"
-            element={<div> hello world checkout &nbsp; {this.props.auth.count}</div>}
           />
         </Routes>
       </div>
@@ -48,4 +37,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, actions)(App);
