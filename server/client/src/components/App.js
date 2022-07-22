@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Routes, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Header from "./Header";
@@ -14,7 +14,6 @@ class App extends Component {
     this.props.getUser();
   }
   render() {
-    console.log(this.props);
     return (
       <div className="container">
         <Header />

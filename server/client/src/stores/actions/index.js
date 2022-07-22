@@ -29,3 +29,12 @@ export const getUser = () => {
 
   };
 };
+
+export const handleToken = (token) => async dispatch => {
+  const response = await axios.post('/api/stripe', token);
+  return async (dispatch) => {
+    console.log("handling token")
+    console.log(response);
+    dispatch({type: actionTypes.GET_USER, data: { user: response.data.googleId }})
+  }
+}

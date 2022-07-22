@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
-
+import Payment  from "./Payments";
 const mapStateToProps = ({ auth }) => {
   return { auth };
 };
@@ -18,11 +18,14 @@ class Header extends Component {
           </li>
         );
       default:
-        return (
-          <li>
+        return [
+          <li key="header-payment">
+            <Payment/>
+          </li>,
+          <li key="header-logout">
             <a href="/api/logout">Log out</a>
           </li>
-        );
+        ];
     }
   }
 
