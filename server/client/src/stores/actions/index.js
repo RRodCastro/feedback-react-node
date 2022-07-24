@@ -30,9 +30,9 @@ export const getUser = () => {
   };
 };
 
-export const handleToken = (token) => async dispatch => {
-  const response = await axios.post('/api/stripe', token);
+export const handleToken = (token) => {
   return async (dispatch) => {
+    const response = await axios.post('/api/stripe', token);
     dispatch(getUserID(response.data));
   }
 }
