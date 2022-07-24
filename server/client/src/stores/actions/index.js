@@ -13,17 +13,17 @@ export const decrement = () => {
   };
 };
 
-export const getUserID = (userID) => {
+export const getUserID = (data) => {
   return {
     type: actionTypes.GET_USER,
-    data: { user: userID },
+    data: { user: data.googleId, credits: data.credits },
   };
 };
 export const getUser = () => {
   return async (dispatch) => {
     const response = await axios.get("/api/current_user");
     if (response.data && response.data.googleId) {
-      return dispatch(getUserID(response.data.googleId));
+      return dispatch(getUserID(response.data));
     }
     dispatch(getUserID(false));
 
@@ -33,8 +33,6 @@ export const getUser = () => {
 export const handleToken = (token) => async dispatch => {
   const response = await axios.post('/api/stripe', token);
   return async (dispatch) => {
-    console.log("handling token")
-    console.log(response);
-    dispatch({type: actionTypes.GET_USER, data: { user: response.data.googleId }})
+    dispatch(getUserID(response.data));
   }
 }

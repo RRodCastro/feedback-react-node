@@ -11,7 +11,7 @@ class Header extends Component {
     switch (this.props.auth.userId) {
       case null:
         return null;
-      case false:
+      case undefined:
         return (
           <li>
             <a href="/auth/google">Login with Google</a>
@@ -21,6 +21,9 @@ class Header extends Component {
         return [
           <li key="header-payment">
             <Payment/>
+          </li>,
+          <li style={{margin: '0 10px'}} key="header-credits">
+            {`You got: ${this.props.auth.credits} credits`}
           </li>,
           <li key="header-logout">
             <a href="/api/logout">Log out</a>

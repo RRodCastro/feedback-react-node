@@ -22,6 +22,7 @@ const reducer = (state = initialState, action) => {
         return {
           ...state,
           userId: action.data.user,
+          credits: action.data.credits,
         };
 
     default:
