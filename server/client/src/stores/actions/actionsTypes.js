@@ -1,4 +1,6 @@
-export const INCREMENT = 'INCREMENT'
-export const DECREMENT = 'DECREMENT'
 export const GET_USER = 'GET_USER'
 export const HANDLE_TOKEN = 'HANDLE_TOKEN'
+export const UPDATE_SURVEY = 'UPDATE_SURVEY'
+export const GET_SURVEYS = 'GET_SURVEYS'
+export const SEND_SURVEY = 'SEND_SURVEY'
+export const SET_SURVEY = 'SET_SURVEY'

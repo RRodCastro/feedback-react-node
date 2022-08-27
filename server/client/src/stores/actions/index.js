@@ -1,18 +1,6 @@
 import * as actionTypes from "./actionsTypes";
 import axios from 'axios';
 
-export const increment = () => {
-  return {
-    type: actionTypes.INCREMENT,
-  };
-};
-
-export const decrement = () => {
-  return {
-    type: actionTypes.DECREMENT,
-  };
-};
-
 export const getUserID = (data) => {
   return {
     type: actionTypes.GET_USER,
@@ -34,5 +22,18 @@ export const handleToken = (token) => {
   return async (dispatch) => {
     const response = await axios.post('/api/stripe', token);
     dispatch(getUserID(response.data));
+  }
+}
+
+export const saveSurvey = (survey) => {
+  return async (dispatch) => {
+    const response = await axios.post('/api/surveys', survey);
+    window.location.href = "/surveys";
+    dispatch({
+      type: actionTypes.SET_SURVEY,
+      data: {survey: {}},
+    });
+    
+
   }
 }
