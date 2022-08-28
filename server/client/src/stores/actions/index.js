@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionsTypes";
-import axios from 'axios';
+import axios from "axios";
 
 export const getUserID = (data) => {
   return {
@@ -14,26 +14,37 @@ export const getUser = () => {
       return dispatch(getUserID(response.data));
     }
     dispatch(getUserID(false));
-
   };
 };
 
 export const handleToken = (token) => {
   return async (dispatch) => {
-    const response = await axios.post('/api/stripe', token);
+    const response = await axios.post("/api/stripe", token);
     dispatch(getUserID(response.data));
-  }
-}
+  };
+};
 
 export const saveSurvey = (survey) => {
   return async (dispatch) => {
-    const response = await axios.post('/api/surveys', survey);
+    const response = await axios.post("/api/surveys", survey);
     window.location.href = "/surveys";
     dispatch({
       type: actionTypes.SET_SURVEY,
-      data: {survey: {}},
+      data: { survey: {} },
     });
-    
+    dispatch({
+      type: actionTypes.GET_USER,
+      data: { user: response.data.googleId, credits: response.data.credits },
+    });
+  };
+};
 
-  }
-}
+export const getSurveys = () => {
+  return async (dispatch) => {
+    const surveys = await axios.get("/api/surveys");
+    dispatch({
+      type: actionTypes.GET_SURVEYS,
+      data: surveys.data,
+    });
+  };
+};

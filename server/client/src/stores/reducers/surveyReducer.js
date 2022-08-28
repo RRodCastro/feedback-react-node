@@ -15,6 +15,11 @@ const reducer = (state = initialState, action) => {
           [action.data.name]: action.data.value,
         },
       };
+    case actionTypes.GET_SURVEYS:
+      return {
+        ...state,
+        surveys: action.data
+      }
     case actionTypes.SET_SURVEY:
       return {
         ...state,

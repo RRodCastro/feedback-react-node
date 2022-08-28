@@ -14,7 +14,7 @@ const SurveyReviewForm = (props) => {
         const value = survey[name] || "";
 
         return (
-          <div>
+          <div key={key}>
             <h5 style={{display: 'block'}}> {label}</h5> 
             <h6 style={{marginLeft: '12px', fontStyle: 'italic'}}> {value} </h6>
           </div>
