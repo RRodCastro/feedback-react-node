@@ -24,10 +24,9 @@ export const handleToken = (token) => {
   };
 };
 
-export const saveSurvey = (survey) => {
+export const saveSurvey = (survey, navigate) => {
   return async (dispatch) => {
     const response = await axios.post("/api/surveys", survey);
-    window.location.href = "/surveys";
     dispatch({
       type: actionTypes.SET_SURVEY,
       data: { survey: {} },
@@ -36,6 +35,7 @@ export const saveSurvey = (survey) => {
       type: actionTypes.GET_USER,
       data: { user: response.data.googleId, credits: response.data.credits },
     });
+    navigate('/surveys');
   };
 };
 

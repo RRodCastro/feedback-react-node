@@ -1,12 +1,14 @@
 import { React } from "react";
 import { useSelector, useDispatch  } from "react-redux";
 import { saveSurvey } from '../../stores/actions/index';
+import { useNavigate } from "react-router-dom";
 import formFields from "./formFields";
 
 const SurveyReviewForm = (props) => {
   const survey = useSelector((state) => state.survey.survey);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  
   return (
     <div>
       {formFields.map((item, key) => {
@@ -35,8 +37,9 @@ const SurveyReviewForm = (props) => {
           Back
         </button>
         <button
-          onClick={() => dispatch(saveSurvey(survey))}
-        className="waves-effect waves-light btn-large">Send</button>
+          onClick={() => dispatch(saveSurvey(survey, navigate))}
+        className="waves-effect waves-light btn-large">Send<i className="material-icons right" > email </i> </button>
+        
       </div>
     </div>
   );
